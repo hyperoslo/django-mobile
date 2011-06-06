@@ -7,10 +7,11 @@ import re
 
 from django.core.files.base import ContentFile
 
+from mobile.backends.base import BaseBackend
 from mobile.settings import GATE_USERNAME, GATE_PASSWORD
 import mobile.models
         
-class GateBackend:
+class Backend(BaseBackend):
     """Aspiro Gate Backend."""
     
     class SMS:
@@ -69,7 +70,7 @@ class GateBackend:
         
             try:
                 xml = ElementTree.XML(body)
-                return xml.find('status').text
+                return [xml.find('status').text, None]
             except:
                 raise StandardError('API response malformed')
         
@@ -82,7 +83,7 @@ class GateBackend:
                 raise StandardError("API request malformed")
                 
             sms = mobile.models.IncomingSMS(
-                id = xml.find('id').text,
+                message_id = xml.find('id').text,
                 country = xml.find('country').text,
                 sender = xml.find('senderNumber').text,
                 recipient = xml.find('targetNumber').text,

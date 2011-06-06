@@ -10,9 +10,10 @@ class OutgoingSMS(models.Model):
     sender = models.CharField('avsender', max_length=255, default=SHORT_CODE)
     message = models.TextField('beskjed')
     sent = models.BooleanField('sendt')
-    price = models.IntegerField('pris')
+    price = models.IntegerField('pris', default=0)
     country = models.CharField('land', max_length=255, default="NO")
     delivery_status = models.IntegerField('leveringsstatus', null=True, blank=True)
+    delivery_message = models.TextField('leveringsmelding', blank=True)
     sent_at = models.DateTimeField('sendingsdato', auto_now_add=True)
     
     def send(self):
@@ -20,7 +21,7 @@ class OutgoingSMS(models.Model):
 
         self.clean()
         
-        delivery_status = backend.SMS.send(
+        delivery_status, delivery_message = backend.SMS.send(
             recipient = self.recipient,
             sender = self.sender,
             price = self.price,
@@ -29,6 +30,7 @@ class OutgoingSMS(models.Model):
         )
         
         self.delivery_status = delivery_status
+        self.delivery_message = delivery_message
         self.sent = True
         self.save()
         
@@ -54,6 +56,7 @@ class OutgoingSMS(models.Model):
         verbose_name_plural = "Sendte SMS"
 
 class IncomingSMS(models.Model):
+    message_id = models.CharField('gateway message id', max_length=255, blank=True)
     recipient = models.CharField('mottaker', max_length=255)
     sender = models.CharField('avsender', max_length=255)
     message = models.TextField('beskjed')
@@ -71,6 +74,7 @@ class IncomingSMS(models.Model):
         verbose_name_plural = "Mottatte SMS"
         
 class IncomingMMS(models.Model):
+    message_id = models.CharField('gateway message id', max_length=255, blank=True)
     recipient = models.CharField('mottaker', max_length=255)
     country = models.CharField('land', max_length=255, default="NO")
     sender = models.CharField('avsender', max_length=255)
