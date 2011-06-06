@@ -1,0 +1,17 @@
+Metadata-Version: 1.0
+Name: mobile
+Version: 0.1.0
+Summary: Simple, easy to use sms app with support for pluggable backends
+Home-page: UNKNOWN
+Author: Johannes Gorset
+Author-email: jgorset@gmail.com
+License: MIT
+Description: UNKNOWN
+Keywords: sms,django
+Platform: UNKNOWN
+Classifier: Development Status :: 4 - Beta
+Classifier: Topic :: Utilities
+Classifier: Framework :: Django
+Classifier: Natural Language :: English
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python

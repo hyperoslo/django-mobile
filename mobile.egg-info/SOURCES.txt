@@ -1,0 +1,11 @@
+mobile/__init__.py
+mobile/admin.py
+mobile/models.py
+mobile/settings.py
+mobile/tests.py
+mobile/urls.py
+mobile/views.py
+mobile.egg-info/PKG-INFO
+mobile.egg-info/SOURCES.txt
+mobile.egg-info/dependency_links.txt
+mobile.egg-info/top_level.txt
