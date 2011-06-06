@@ -1,2 +1,3 @@
+*.egg_info
 *.pyc
 .DS_Storee
