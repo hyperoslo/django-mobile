@@ -95,7 +95,7 @@ class Backend(BaseBackend):
             if result.Success:
                 return [result.ErrorNumber, 'Message is received and is being processed.']
             else:
-                return [result.ErrorNumber, ErrorMessage]
+                return [result.ErrorNumber, result.ErrorMessage]
         
         @classmethod
         def receive(self, data):
