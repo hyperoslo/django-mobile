@@ -42,8 +42,10 @@ class OutgoingSMS(models.Model):
     def save(self, *args, **kwargs):
         created = True if not self.id else False
 
+        # Do not call send here, it will become a loop.
         if created:
-            self.send()
+            self.clean()
+            #self.send()
         
         super(OutgoingSMS, self).save(*args, **kwargs)
         
