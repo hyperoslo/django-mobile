@@ -115,7 +115,7 @@ class Backend(BaseBackend):
             #try:
             sms.keyword = data.get('keyword')
             sms.message = re.sub(
-                pattern = re.compile(sms.keyword, flags=re.IGNORECASE | re.UNICODE),
+                pattern = re.compile(sms.keyword + " ", flags=re.IGNORECASE | re.UNICODE),
                 repl = '',
                 string = sms.message
             )
