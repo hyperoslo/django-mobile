@@ -19,8 +19,6 @@ class OutgoingSMS(models.Model):
     def send(self):
         """Send the SMS."""
 
-        self.clean()
-        
         delivery_status, delivery_message = backend.SMS.send(
             recipient = self.recipient,
             sender = self.sender,
@@ -41,13 +39,13 @@ class OutgoingSMS(models.Model):
         
     def save(self, *args, **kwargs):
         created = True if not self.id else False
+        self.clean()
 
-        # Do not call send here, it will become a loop.
-        if created:
-            self.clean()
-            #self.send()
-        
         super(OutgoingSMS, self).save(*args, **kwargs)
+
+        if created:
+            self.send()
+        
         
             
     def __unicode__(self):
