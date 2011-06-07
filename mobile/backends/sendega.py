@@ -25,7 +25,7 @@ from mobile.settings import GATE_USERNAME, GATE_PASSWORD
 import mobile.models
 
 
-GATEWAY_URL = getattr(settings, "SENDEGA_GATEWAT_URL", "https://smsc.sendega.com/Content.asmx?WSDL")
+GATEWAY_URL = "https://smsc.sendega.com/Content.asmx?WSDL"
 
 logging.basicConfig(level=logging.CRITICAL)
 logging.getLogger('suds.client').setLevel(logging.CRITICAL)
