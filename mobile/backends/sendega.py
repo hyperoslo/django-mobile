@@ -112,16 +112,16 @@ class Backend(BaseBackend):
                 source = data
             )
 
-            #try:
-            sms.keyword = data.get('keyword')
-            sms.message = re.sub(
-                pattern = re.compile(sms.keyword + " ", flags=re.IGNORECASE | re.UNICODE),
-                repl = '',
-                string = sms.message
-            )
-            #except:
-            #    pass
-                
+            try:
+                sms.keyword = data.get('keyword')
+                sms.message = re.sub(
+                    pattern = re.compile(sms.keyword + " ", flags=re.IGNORECASE | re.UNICODE),
+                    repl = '',
+                    string = sms.message
+                )
+            except:
+                pass
+            
             return sms.save()
             
     class MMS:
