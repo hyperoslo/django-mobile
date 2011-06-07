@@ -1,6 +1,4 @@
 # encoding: utf-8
-
-
 import os
 import logging
 import suds
@@ -13,12 +11,7 @@ from django.template import loader
 from django.template import Context
 from django.template import Template
 
-#from httplib import HTTPConnection
-#from base64 import b64encode, b64decode
-#from xml.etree import ElementTree
 import re
-
-#from django.core.files.base import ContentFile
 
 from mobile.backends.base import BaseBackend
 from mobile.settings import GATE_USERNAME, GATE_PASSWORD
