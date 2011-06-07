@@ -111,9 +111,14 @@ class Backend(BaseBackend):
                 message = data.get('msg'),
                 source = data
             )
-            
+
             try:
                 sms.keyword = data.get('keyword')
+                sms.message = re.sub(
+                    pattern = re.compile(sms.keyword, flags=re.INGORECASE | re.UNICODE),
+                    repl = '',
+                    string = sms.message
+                )
             except:
                 pass
                 
