@@ -16,7 +16,7 @@ from django.template import Template
 #from httplib import HTTPConnection
 #from base64 import b64encode, b64decode
 #from xml.etree import ElementTree
-#import re
+import re
 
 #from django.core.files.base import ContentFile
 
