@@ -106,7 +106,7 @@ class Backend(BaseBackend):
             sms = mobile.models.IncomingSMS(
                 message_id = data.get('msgid'),
                 country = data.get('mcc'),
-                sender = data.get('msisdn')
+                sender = data.get('msisdn'),
                 recipient = data.get('shortcode'),
                 message = data.get('msg'),
                 source = data
