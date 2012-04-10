@@ -12,23 +12,24 @@ class Backend(BaseBackend):
     class SMS:
         
         @classmethod
-        def send(self, recipient, sender, price, country, message):
+        def send(self, recipient, sender, price, country, message, **kwargs):
             """Write message to the stream in a thread-safe way."""
 
             stream = kwargs.pop('stream', sys.stdout)
 
             try:
-                self.stream.write('SMS ----------------------------')
-                self.stream.write('Recipient: %s' % recipient)
-                self.stream.write('Sender: %s' % sender)
-                self.stream.write('Country: %s' % country)
-                self.stream.write('Price: %s' % price)
-                self.stream.write('Message: %s' % message)
-                self.stream.write('---------------------------------')
-                self.stream.flush()  # flush after each message
+                stream.write('SMS -----------------------------\n')
+                stream.write('Recipient: %s\n' % recipient)
+                stream.write('Sender: %s\n'    % sender)
+                stream.write('Country: %s\n'   % country)
+                stream.write('Price: %s\n'     % price)
+                stream.write('Message: %s\n'   % message)
+                stream.write('---------------------------------\n')
+                stream.flush()  # flush after each message
             except:
                 pass
 
+            return [1, 'Message was successfully written to console']
 
         @classmethod
         def receive(self, data):
