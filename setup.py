@@ -20,6 +20,8 @@ setup(
     long_description=read('README.md'),
     packages = [
         'mobile',
+        'mobile.backends',
+        'mobile.migrations'
     ],
     classifiers=[
         "Development Status :: 4 - Beta",
