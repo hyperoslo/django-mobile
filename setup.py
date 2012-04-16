@@ -18,6 +18,9 @@ setup(
     license = "MIT",
     keywords = ['sms', 'django',],
     long_description=read('README.md'),
+    install_requires = [
+        'suds==0.4'
+    ],
     packages = [
         'mobile',
         'mobile.backends',
