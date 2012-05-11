@@ -23,7 +23,7 @@ class Backend(BaseBackend):
                 stream.write('Sender: %s\n'    % sender)
                 stream.write('Country: %s\n'   % country)
                 stream.write('Price: %s\n'     % price)
-                stream.write('Message: %s\n'   % message)
+                stream.write('Message: %s\n'   % message.encode('utf-8'))
                 stream.write('---------------------------------\n')
                 stream.flush()  # flush after each message
             except:
