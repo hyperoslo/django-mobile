@@ -7,7 +7,7 @@ class IncomingSMSAdmin(admin.ModelAdmin):
 admin.site.register(IncomingSMS, IncomingSMSAdmin)
 
 class OutgoingSMSAdmin(admin.ModelAdmin):
-    list_display = ['recipient', 'sent_at', 'sent', 'delivery_status']
+    list_display = ['recipient', 'message', 'sent_at', 'sent', 'delivery_status']
 
 admin.site.register(OutgoingSMS, OutgoingSMSAdmin)
 
