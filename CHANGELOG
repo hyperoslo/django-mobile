@@ -1,5 +1,10 @@
 CHANGELOG
 
+v0.3
+- Removed dependency on django_api_utilities
+- Ensure receiving views throw 405 METHOD NOT ALLOWED on non-POST methods
+- Added CHANGELOG
+
 v0.2.1
 - Minor tweaks to admin interface for OutgoingSMS
 - Console backend now properly encodes OutgoingSMS.message
