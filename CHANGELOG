@@ -1,1 +1,13 @@
 CHANGELOG
+
+v0.2.1
+- Minor tweaks to admin interface for OutgoingSMS
+- Console backend now properly encodes OutgoingSMS.message
+
+v0.2
+- Fixed duplicate sending bug
+- OutgoingSMS.save no longer sends automatically
+
+v0.1
+- Fixed up setup.py to allow installation with pip
+- Fixed console backend by adding **kwargs
