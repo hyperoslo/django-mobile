@@ -14,7 +14,7 @@ from django.template import Template
 import re
 
 from mobile.backends.base import BaseBackend
-from mobile.settings import GATE_USERNAME, GATE_PASSWORD
+from mobile.settings import GATE_USERNAME, GATE_PASSWORD, DELIVERY_URL
 import mobile.models
 
 
@@ -74,7 +74,7 @@ class Backend(BaseBackend):
                 contentTypeID = 1, 
                 contentHeader = "", 
                 content = message, 
-                dlrUrl = "http://myserver.example/mydlrUrl/", 
+                dlrUrl = DELIVERY_URL, 
                 ageLimit = 0, 
                 extID = "", 
                 sendDate = "", 
