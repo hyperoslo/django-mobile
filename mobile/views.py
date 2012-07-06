@@ -9,7 +9,7 @@ def receive_sms(request):
     if request.method != 'POST':
         return HttpResponse(status=405)
     
-    backend.SMS.receive(request.raw_post_data)
+    backend.SMS.receive(request.body)
     return HttpResponse(status=200)
 
 @csrf_exempt
@@ -17,5 +17,5 @@ def receive_mms(request):
     if request.method != 'POST':
         return HttpResponse(status=405)
     
-    backend.MMS.receive(request.raw_post_data)
+    backend.MMS.receive(request.body)
     return HttpResponse(status=200)

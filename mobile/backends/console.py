@@ -34,7 +34,27 @@ class Backend(BaseBackend):
         @classmethod
         def receive(self, data):
             """Return IncomingSMS instance from parsed data."""
-            raise NotImplementedError
+            
+            data = QueryDict(data).copy()
+            
+            sms = mobile.models.IncomingSMS(
+                sender = data.get('sender'),
+                recipient = data.get('recipient'),
+                message = data.get('message'),
+                source = data
+            )
+
+            try:
+                sms.keyword = data.get('keyword')
+                sms.message = re.sub(
+                    pattern = re.compile(sms.keyword + " ", flags=re.IGNORECASE | re.UNICODE),
+                    repl = '',
+                    string = sms.message
+                )
+            except:
+                pass
+            
+            return sms.save()
             
     class MMS:
         

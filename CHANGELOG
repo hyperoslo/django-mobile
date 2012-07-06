@@ -1,5 +1,9 @@
 CHANGELOG
 
+v0.3.1
+- Changed from request.raw_post_data to request.body (required Django 1.4)
+- Added a receive callback handler for the console backend
+
 v0.3
 - Removed dependency on django_api_utilities
 - Ensure receiving views throw 405 METHOD NOT ALLOWED on non-POST methods
