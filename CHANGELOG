@@ -1,5 +1,8 @@
 CHANGELOG
 
+v0.3.3
+- Add delivery receipt url in settings
+
 v0.3.2
 - Fix bugs in console receive handler
 
