@@ -1,5 +1,8 @@
 CHANGELOG
 
+v0.3.2
+- Fix bugs in console receive handler
+
 v0.3.1
 - Changed from request.raw_post_data to request.body (required Django 1.4)
 - Added a receive callback handler for the console backend

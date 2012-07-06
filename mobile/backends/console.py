@@ -1,10 +1,14 @@
 """
 SMS backend that writes messages to console instead of sending them.
 """
+import re
 import sys
 import threading
 
+from django.http import QueryDict
+
 from mobile.backends.base import BaseBackend
+import mobile.models
 
 
 class Backend(BaseBackend):
