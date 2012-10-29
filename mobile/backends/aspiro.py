@@ -10,17 +10,18 @@ from django.core.files.base import ContentFile
 from mobile.backends.base import BaseBackend
 from mobile.settings import GATE_USERNAME, GATE_PASSWORD
 import mobile.models
-        
+
+
 class Backend(BaseBackend):
     """Aspiro Gate Backend."""
-    
+
     class SMS:
-    
+
         @classmethod
         def send(self, recipient, sender, price, country, message):
             """
             Send an SMS and return its initial delivery status code.
-        
+
             Delivery status codes:
             201 -- Message is received and is being processed.
             202 -- Message is aknowledged by operator and is being processed.
@@ -41,17 +42,17 @@ class Backend(BaseBackend):
             913 -- Service rejected by the user.
             951 -- User is blacklisted due to request from Operator or User. Message cannot be sent to user.
             999 -- General error. Covers all errors not specified with a unique error code.
-        
+
             See Gate API Documentation: http://merlin.aspiro.com/avalon-doc/api/gate-api.pdf
-        
+
             """
-        
+
             headers = {
                 'Authorization': 'Basic %s' % b64encode(
                     '%s:%s' % (GATE_USERNAME, GATE_PASSWORD)
                 )
             }
-        
+
             body  = u'<?xml version="1.0" encoding="UTF-8" ?>'
             body += u'<gate>'
             body += u'   <targetNumber>%s</targetNumber>' % recipient
@@ -67,13 +68,13 @@ class Backend(BaseBackend):
             connection.request('POST', '/gate/service', body.encode('utf-8'), headers)
             response = connection.getresponse()
             body = response.read()
-        
+
             try:
                 xml = ElementTree.XML(body)
                 return [xml.find('status').text, None]
             except:
                 raise StandardError('API response malformed')
-        
+
         @classmethod
         def receive(self, data):
             """Return IncomingSMS instance from parsed data."""
@@ -81,28 +82,28 @@ class Backend(BaseBackend):
                 xml = ElementTree.XML(data)
             except:
                 raise StandardError("API request malformed")
-                
+
             sms = mobile.models.IncomingSMS(
-                message_id = xml.find('id').text,
-                country = xml.find('country').text,
-                sender = xml.find('senderNumber').text,
-                recipient = xml.find('targetNumber').text,
-                message = xml.find('sms/content').text,
-                source = data
+                message_id=xml.find('id').text,
+                country=xml.find('country').text,
+                sender=xml.find('senderNumber').text,
+                recipient=xml.find('targetNumber').text,
+                message=xml.find('sms/content').text,
+                source=data
             )
-            
+
             if xml.find('keyconfig'):
                 sms.keyword = xml.find('keyconfig/keyword').text
                 sms.message = re.sub(
-                    pattern = re.compile(sms.keyword, flags=re.IGNORECASE | re.UNICODE),
-                    repl = '',
-                    string = sms.message
+                    pattern=re.compile(sms.keyword, flags=re.IGNORECASE | re.UNICODE),
+                    repl='',
+                    string=sms.message
                 )
-                
+
             return sms.save()
-            
+
     class MMS:
-        
+
         @classmethod
         def receive(self, data):
             """Return IncomingMMS instance from parsed data."""
@@ -110,37 +111,37 @@ class Backend(BaseBackend):
                 xml = ElementTree.XML(data)
             except:
                 raise StandardError("API request malformed")
-                
+
             mms = mobile.models.IncomingMMS.objects.create(
-                id = xml.find('id').text,
-                country = xml.find('country').text,
-                sender = xml.find('senderNumber').text,
-                recipient = xml.find('targetNumber').text,
-                subject = xml.find('mms/subject').text,
-                source = data
+                id=xml.find('id').text,
+                country=xml.find('country').text,
+                sender=xml.find('senderNumber').text,
+                recipient=xml.find('targetNumber').text,
+                subject=xml.find('mms/subject').text,
+                source=data
             )
-            
+
             for item in xml.findall('mms/item'):
                 if item.find('base64').text == 'true':
                     data = b64decode(item.find('content').text)
                 else:
                     data = item.find('content').text
-                
+
                 mms_file = mobile.models.MMSFile(
-                    mms = mms
+                    mms=mms
                 )
-                
+
                 # Extract content type from MIME data
                 matches = re.search('([^;]*/[^;]*);', item.find('mimeType').text)
                 if matches:
                     mms_file.content_type = matches.group(1)
-                
+
                 # Save file
                 mms_file.file.save(
-                    name = item.find('name').text,
-                    content = ContentFile(data)
+                    name=item.find('name').text,
+                    content=ContentFile(data)
                 )
-                
+
                 mms_file.save()
 
             return mms

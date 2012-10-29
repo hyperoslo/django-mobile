@@ -3,7 +3,6 @@ SMS backend that writes messages to console instead of sending them.
 """
 import re
 import sys
-import threading
 
 from django.http import QueryDict
 
@@ -14,7 +13,7 @@ import mobile.models
 class Backend(BaseBackend):
 
     class SMS:
-        
+
         @classmethod
         def send(self, recipient, sender, price, country, message, **kwargs):
             """Write message to the stream in a thread-safe way."""
@@ -38,30 +37,30 @@ class Backend(BaseBackend):
         @classmethod
         def receive(self, data):
             """Return IncomingSMS instance from parsed data."""
-            
+
             data = QueryDict(data).copy()
-            
+
             sms = mobile.models.IncomingSMS(
-                sender = data.get('sender'),
-                recipient = data.get('recipient'),
-                message = data.get('message'),
-                source = data
+                sender=data.get('sender'),
+                recipient=data.get('recipient'),
+                message=data.get('message'),
+                source=data
             )
 
             try:
                 sms.keyword = data.get('keyword')
                 sms.message = re.sub(
-                    pattern = re.compile(sms.keyword + " ", flags=re.IGNORECASE | re.UNICODE),
-                    repl = '',
-                    string = sms.message
+                    pattern=re.compile(sms.keyword + " ", flags=re.IGNORECASE | re.UNICODE),
+                    repl='',
+                    string=sms.message
                 )
             except:
                 pass
-            
+
             return sms.save()
-            
+
     class MMS:
-        
+
         @classmethod
         def receive(self, data):
             """Return IncomingMMS instance from parsed data."""

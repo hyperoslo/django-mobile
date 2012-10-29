@@ -5,6 +5,7 @@ from django.db import models
 from backends import backend
 from settings import DEFAULT_INTERNATIONAL_PREFIX, SHORT_CODE
 
+
 class OutgoingSMS(models.Model):
     recipient = models.CharField('mottaker', max_length=255)
     sender = models.CharField('avsender', max_length=255, default=SHORT_CODE)
@@ -19,7 +20,7 @@ class OutgoingSMS(models.Model):
     def send(self, commit=True):
         """
         Send the SMS and populate delivery status, message and sent-flag.
-        
+
         :param commit: Saves outgoing sms to database after sending
         """
 
@@ -56,6 +57,7 @@ class OutgoingSMS(models.Model):
         verbose_name = "Sendt SMS"
         verbose_name_plural = "Sendte SMS"
 
+
 class IncomingSMS(models.Model):
     message_id = models.CharField('gateway message id', max_length=255, blank=True)
     recipient = models.CharField('mottaker', max_length=255)
@@ -74,6 +76,7 @@ class IncomingSMS(models.Model):
         verbose_name = "Mottat SMS"
         verbose_name_plural = "Mottatte SMS"
 
+
 class IncomingMMS(models.Model):
     message_id = models.CharField('gateway message id', max_length=255, blank=True)
     recipient = models.CharField('mottaker', max_length=255)
@@ -89,6 +92,7 @@ class IncomingMMS(models.Model):
     class Meta:
         verbose_name = "Mottat MMS"
         verbose_name_plural = "Motatte MMS"
+
 
 class MMSFile(models.Model):
     file = models.FileField('fil', upload_to='uploads/mms_files')
