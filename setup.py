@@ -20,7 +20,8 @@ setup(
     keywords = ['sms', 'django',],
     long_description=read('README.md'),
     install_requires = [
-        'suds==0.4'
+        'suds==0.4',
+        'twilio==5.7.0'
     ],
     packages = [
         'mobile',

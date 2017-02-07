@@ -10,3 +10,6 @@ try:
     GATE_PASSWORD = getattr(settings, 'GATE_PASSWORD')
 except AttributeError:
     pass
+
+# Configure Twilio by setting the environment variables
+# TWILIO_ACCOUNT_SID and TWILIO_AUTH_TOKEN
