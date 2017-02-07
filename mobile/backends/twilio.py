@@ -1,7 +1,12 @@
 # encoding: utf-8
+import twilio.twiml
+
+from django.http import QueryDict
+
 from twilio.rest import TwilioRestClient
 
 from mobile.backends.base import BaseBackend
+import mobile.models
 
 class Backend(BaseBackend):
     """Twilio Gate Backend."""
@@ -30,7 +35,19 @@ class Backend(BaseBackend):
         @classmethod
         def receive(self, data):
             """Return IncomingSMS instance from parsed data."""
-            raise NotImplementedError
+
+            data = QueryDict(data).copy()
+
+            sms = mobile.models.IncomingSMS(
+                message_id=data.get('MessageSid'),
+                country=data.get('FromCountry', None),
+                sender=data.get('From'),
+                recipient=data.get('To'),
+                message=data.get('Body'),
+                source=data
+            )
+
+            return sms.save()
 
     class MMS:
 
