@@ -12,7 +12,7 @@ def read(fname):
 
 setup(
     name = 'mobile',
-    version = "0.3.3",
+    version = "0.3.4",
     author = "Johannes Gorset",
     author_email = "jgorset@gmail.com",
     description = "Simple, easy to use sms app with support for pluggable backends",
