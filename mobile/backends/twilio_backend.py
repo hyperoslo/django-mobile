@@ -1,11 +1,10 @@
 # encoding: utf-8
-import twilio.twiml
-
 from django.http import QueryDict
 
 from twilio.rest import TwilioRestClient
 
 from mobile.backends.base import BaseBackend
+from mobile.settings import GATE_USERNAME, GATE_PASSWORD
 import mobile.models
 
 class Backend(BaseBackend):
@@ -14,7 +13,7 @@ class Backend(BaseBackend):
     class SMS:
 
         @classmethod
-        def send(self, recipient, sender, message):
+        def send(self, recipient, sender, message, **kwargs):
             """
             Send an SMS and return its initial delivery status code.
 
@@ -22,7 +21,7 @@ class Backend(BaseBackend):
 
             """
 
-            client = TwilioRestClient()
+            client = TwilioRestClient(GATE_USERNAME, GATE_PASSWORD)
 
             message = client.messages.create(
                 to=recipient,
